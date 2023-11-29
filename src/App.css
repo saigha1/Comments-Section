@@ -163,3 +163,7 @@ button{
 .amyPlus, .amyMinus{
   cursor: pointer;
 }
+
+.maxPlus, .maxMinus{
+  cursor: pointer;
+}

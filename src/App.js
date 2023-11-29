@@ -21,6 +21,7 @@ function App() {
   //       const PlusOrMinus ? (topLevelChats[0].score += 1) : (topLevelChats[0].score -= 1)
   // }
   const [amyScore, setAmyScore] = useState(data.comments[0].score);
+  const [maxScore, setMaxScore] = useState(data.comments[1].score);
 
   useEffect(() => {
     // Update data whenever amyScore changes
@@ -29,11 +30,28 @@ function App() {
     // You might want to store the updatedData in state or use it accordingly
   }, [amyScore]);
 
+
   const updateAmyScore = (increase) => {
     if (increase) {
       setAmyScore(prevAmyScore => prevAmyScore + 1);
     } else {
       setAmyScore(prevAmyScore => prevAmyScore - 1);
+    }
+  };
+
+  useEffect(() => {
+    // Update data whenever amyScore changes
+    const updatedData = { ...data };
+    updatedData.comments[1].score = maxScore;
+    // You might want to store the updatedData in state or use it accordingly
+  }, [maxScore]);
+  
+
+  const updateMaxScore = (increase) => {
+    if (increase) {
+      setMaxScore(prevMaxScore => prevMaxScore + 1);
+    } else {
+      setMaxScore(prevMaxScore => prevMaxScore - 1);
     }
   };
 
@@ -75,11 +93,11 @@ function App() {
         <div className = "user">
           <div className = "counter">
             {/* CSS: align on main  */}
-              <div> <img src = {plus} alt= "plus"/>
+              <div> <img src = {plus} className='maxPlus' onClick = { () => updateMaxScore(true)} alt= "plus"/>
               </div>
               <div> <p>{topLevelChats[1].score}</p>
               </div>
-              <div> <img src = {minus} alt= "plus"/>
+              <div> <img src = {minus} className='maxMinus' onClick = { () => updateMaxScore(false)}alt= "plus"/>
               </div>
           </div>
           <div className = "commentSection">
