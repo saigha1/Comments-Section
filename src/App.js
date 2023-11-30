@@ -22,6 +22,8 @@ function App() {
   // }
   const [amyScore, setAmyScore] = useState(data.comments[0].score);
   const [maxScore, setMaxScore] = useState(data.comments[1].score);
+  const [ramesScore, setRamesScore] = useState(data.comments[1].replies[0].score);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     // Update data whenever amyScore changes
@@ -54,6 +56,43 @@ function App() {
       setMaxScore(prevMaxScore => prevMaxScore - 1);
     }
   };
+
+  useEffect(() => {
+    // Update data whenever amyScore changes
+    const updatedData = { ...data };
+    updatedData.comments[1].replies[0].score = ramesScore;
+    // You might want to store the updatedData in state or use it accordingly
+  }, [ramesScore]);
+  
+
+  const updateRamesScore = (increase) => {
+    if (increase) {
+      setRamesScore(prevRamesScore => prevRamesScore + 1);
+    } else {
+      setRamesScore(prevRamesScore => prevRamesScore - 1);
+    }
+  };
+
+
+  const deleteMessage = () => {
+    setShowConfirmation(true);
+  };
+
+
+  const confirmDelete = () => {
+    // Perform the deletion logic here
+    // const prompt = DOM.getElementByClass("modalPrompt")
+    // prompt.style.display = "block";
+
+    // After deletion, hide the confirmation prompt
+    setShowConfirmation(false);
+  };
+
+  const cancelDelete = () => {
+    // Cancel deletion action
+    setShowConfirmation(false);
+  };
+
 
   return (
     <div className="App">
@@ -136,9 +175,9 @@ function App() {
             <div className = "userReplies">
               <div className = "counter">
                 {/* CSS: align on main  */}
-                <div> <img src = {plus} alt= "plus"/></div>
-                <div> <p>{topLevelChats[1].replies[0].score}</p></div>
-                <div> <img src = {minus} alt= "plus"/></div>
+                <div><img src = {plus} onClick = { () => updateRamesScore(true)} className = "ramesPlus" alt= "plus"/></div>
+                <div><p>{topLevelChats[1].replies[0].score}</p></div>
+                <div><img src = {minus} onClick={ () => updateRamesScore(false)} className = "ramesMinus " alt= "plus"/></div>
               </div>
               <div className = "commentSection">
                   <div className='commentHeading'>
@@ -182,8 +221,18 @@ function App() {
                     </div>
                     {/* Justify-content: space between */}
                     <div className='CRUDreply'>
-                      <div className='delete'><img src = {remov} alt= "delete"/>
-                      <p> Delete</p></div>
+                      <div className='delete' onClick={() => deleteMessage()}><img src = {remov} alt= "delete"/>
+                        <p> Delete</p>
+                        {showConfirmation && (
+                          <div className='modalPrompt'>
+                            <p>Are you sure you want to delete?</p>
+                            <div>
+                              <button className='Yes' onClick={confirmDelete}>Yes</button>
+                              <button className='No' onClick={cancelDelete}>No</button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                       
                       <div className='edit'><img src = {edit} alt= "edit"/>
                       <p> Edit</p>
@@ -208,8 +257,16 @@ function App() {
               <button type = "submit" >Submit</button>
           </div>
         </div>
-        
 
+        <div className='modalPrompt'>
+          <p>Are you sure you want to delete?</p>
+          <div><button className='Yes'>Yes</button><button className='No'>No</button></div>
+        </div>
+
+        <div>
+
+  
+        </div>
       </div>
      
     </div>

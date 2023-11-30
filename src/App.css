@@ -157,6 +157,7 @@ button{
   align-items: center;
   margin-right: 20px;
   gap: 5px;
+  cursor: pointer;
 }
 
 
@@ -166,4 +167,18 @@ button{
 
 .maxPlus, .maxMinus{
   cursor: pointer;
+}
+
+.ramesPlus, .ramesMinus{
+  cursor: pointer;
+}
+
+.modalPrompt{
+  display: none;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
 }
